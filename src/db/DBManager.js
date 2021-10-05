@@ -21,6 +21,10 @@ export default class DBManager {
         return JSON.parse(listString);
     }
 
+    queryDeleteList = (listkey) => {
+        localStorage.removeItem("top5-list-" + listkey);
+    }
+
     mutationCreateList = (list) => {
         this.mutationUpdateList(list);
     }
@@ -35,4 +39,6 @@ export default class DBManager {
         let sessionDataString = JSON.stringify(sessionData);
         localStorage.setItem("top5-data", sessionDataString);
     }
+
+    
 }

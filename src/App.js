@@ -129,10 +129,13 @@ class App extends React.Component {
         });
     }
     deleteList = (keyNamePair) => {
-        this.setState(prevState => ({
+        this.setState( ({
+            currentList: this.state.currentList,
+            sessionData: this.state.sessionData,
+            nextKey: this.state.nextKey,
             listKeyPairMarkedForDeletion: keyNamePair
         }), () => {
-
+            
         });
 
         // SOMEHOW YOU ARE GOING TO HAVE TO FIGURE OUT
@@ -153,13 +156,26 @@ class App extends React.Component {
         modal.classList.remove("is-visible");
     }
 
-    confirmDeleteListModal(){
-        
-
-
+    confirmDeleteListModal=()=>{
         let modal = document.getElementById("delete-modal");
         modal.classList.remove("is-visible");
-        //this.state.sessionData.keyNamePairs.splice(this.state.sessionData.keyNamePairs.indexOf.this.keyNamePair);
+        
+        let newKyNmePrs = [...this.state.sessionData.keyNamePairs];
+        newKyNmePrs.splice(newKyNmePrs.indexOf(this.state.listKeyPairMarkedForDeletion), 1);
+        this.sortKeyNamePairsByName(newKyNmePrs);
+
+        this.setState(prevState => ({
+            currentList: null,
+            sessionData: {
+                sessionData: this.state.sessionData,
+                nextKey: prevState.sessionData.nextKey,
+                counter: prevState.sessionData.counter,
+                keyNamePairs: newKyNmePrs                
+            }
+        }), () => {
+        this.db.queryDeleteList(this.state.listKeyPairMarkedForDeletion.key);
+        this.db.mutationUpdateSessionData(this.state.sessionData);
+        });
     }
 
     renameItm = (key, newVal) => {
