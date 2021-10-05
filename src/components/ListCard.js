@@ -25,9 +25,8 @@ export default class ListCard extends React.Component {
         this.props.loadListCallback(listKey);
     }
     handleDeleteList = (event) => {
-        let listKey = event.target.id;
         event.stopPropagation();
-        this.props.deleteListCallback(listKey);
+        this.props.deleteListCallback(this.props.keyNamePair);
     }
     handleToggleEdit = (event) => {
         this.setState({

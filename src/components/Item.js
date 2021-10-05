@@ -9,26 +9,12 @@ export default class Item extends React.Component {
             editActive: false,
         }
     }
-    handleClick = (event) => {
-        if (event.detail === 1) {
-            this.handleLoadList(event);
-        }
-        else if (event.detail === 2) {
-            this.handleToggleEdit(event);
-        }
+    handleClick = () => {
+        this.setState({
+            editActive: !this.state.editActive
+        });
     }
-    handleLoadList = (event) => {
-        let listKey = event.target.id;
-        if (listKey.startsWith("list-card-text-")) {
-            listKey = listKey.substring("list-card-text-".length);
-        }
-        this.props.loadListCallback(listKey);
-    }
-    handleDeleteList = (event) => {
-        event.stopPropagation();
-        this.props.deleteListCallback(this.props.keyNamePair);
-    }
-    handleToggleEdit = (event) => {
+    handleToggleEdit = () => {
         this.setState({
             editActive: !this.state.editActive
         });
@@ -42,27 +28,27 @@ export default class Item extends React.Component {
         }
     }
     handleBlur = () => {
-        let key = this.props.keyNamePair.key;
-        let textValue = this.state.text;
-        console.log("Item handleBlur: " + textValue);
-        this.props.renameListCallback(key, textValue);
-        this.handleToggleEdit();
+        this.props.renameItm(this.props.itmkey, this.state.text);
+        this.setState({
+            editActive: !this.state.editActive
+        });
     }
 
     render() {
-        const { itm, renameItm, itmkey } = this.props;
-
+        const { itm, itmkey } = this.props;
         if (this.state.editActive) {
             return (
-                <input
-                    id={"top-5-item-" + (itmkey-1)}
-                    className='top-5-item-'
-                    type='text'
-                    onKeyPress={this.handleKeyPress}
-                    onBlur={this.handleBlur}
-                    onChange={this.handleUpdate}
-                    defaultValue={itm}
-                />)
+                <div id={'top5-item-' + (itmkey-1)} className={'top5-item' }>
+                    <input
+                        id={"top-5-item-" + (itmkey-1)}
+                        className='top-5-item-'
+                        type='text'
+                        onKeyPress={this.handleKeyPress}
+                        onBlur={this.handleBlur}
+                        onChange={this.handleUpdate}
+                        defaultValue={itm}
+                    />
+                </div>)
         }
         else {
             return (

@@ -151,7 +151,7 @@ class App extends React.Component {
         //this.state.sessionData.keyNamePairs.splice(this.state.sessionData.keyNamePairs.indexOf.this.keyNamePair);
     }
 
-    renameItm(key, newVal){
+    renameItm = (key, newVal) => {
         this.state.currentList.items[key] = newVal;
 
         this.setState(prevState => ({
@@ -162,9 +162,9 @@ class App extends React.Component {
                 currentList: prevState.currentList
             }
         }), )
-        let list = this.state.currentList;
-            this.db.mutationUpdateList(list);
-            this.db.mutationUpdateSessionData(this.state.sessionData);
+    
+        this.db.mutationUpdateList(this.state.currentList);
+        this.db.mutationUpdateSessionData(this.state.sessionData);
 
     }
 
@@ -186,7 +186,6 @@ class App extends React.Component {
                 <Workspace
                     currentList={this.state.currentList} 
                     renameItm = {this.renameItm}
-                    loadListCallback={this.loadList}
                     />
                 <Statusbar 
                     currentList={this.state.currentList} />
