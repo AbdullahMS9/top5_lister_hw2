@@ -69,6 +69,10 @@ class App extends React.Component {
             // PUTTING THIS NEW LIST IN PERMANENT STORAGE
             // IS AN AFTER EFFECT
             this.db.mutationCreateList(newList);
+            // AN AFTER EFFECT IS THAT WE NEED TO MAKE SURE
+            // THE TRANSACTION STACK IS CLEARED
+            
+            this.db.mutationUpdateSessionData(this.state.sessionData); //saves lists
         });
     }
     renameList = (key, newName) => {
@@ -124,8 +128,12 @@ class App extends React.Component {
             // ANY AFTER EFFECTS?
         });
     }
-    deleteList = (key) => {
-        this.listKeyPair = this.db.queryGetList(key);
+    deleteList = (keyNamePair) => {
+        this.setState(prevState => ({
+            listKeyPairMarkedForDeletion: keyNamePair
+        }), () => {
+
+        });
 
         // SOMEHOW YOU ARE GOING TO HAVE TO FIGURE OUT
         // WHICH LIST IT IS THAT THE USER WANTS TO
@@ -146,6 +154,9 @@ class App extends React.Component {
     }
 
     confirmDeleteListModal(){
+        
+
+
         let modal = document.getElementById("delete-modal");
         modal.classList.remove("is-visible");
         //this.state.sessionData.keyNamePairs.splice(this.state.sessionData.keyNamePairs.indexOf.this.keyNamePair);
@@ -190,7 +201,7 @@ class App extends React.Component {
                 <Statusbar 
                     currentList={this.state.currentList} />
                 <DeleteModal
-                    listKeyPair = {this.listKeyPair}
+                    listKeyPair = {this.state.listKeyPairMarkedForDeletion}
                     hideDeleteListModalCallback={this.hideDeleteListModal}
                     confirmDeleteListModalCallback={this.confirmDeleteListModal}
                 />

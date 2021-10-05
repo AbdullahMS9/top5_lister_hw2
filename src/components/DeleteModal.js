@@ -20,12 +20,12 @@ export default class DeleteModal extends Component {
                         <button
                             id="dialog-yes-button"
                             className="modal-button"
-                            onClick={hideDeleteListModalCallback}
+                            onClick={confirmDeleteListModalCallback}
                         >Confirm</button>
                         <button
                             id="dialog-no-button"
                             className="modal-button"
-                            onClick={confirmDeleteListModalCallback}
+                            onClick={hideDeleteListModalCallback}
                         >Cancel</button>
                     </div>
                 </div>

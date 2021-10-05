@@ -28,6 +28,7 @@ export default class Item extends React.Component {
         }
     }
     handleBlur = () => {
+
         this.props.renameItm(this.props.itmkey, this.state.text);
         this.setState({
             editActive: !this.state.editActive
