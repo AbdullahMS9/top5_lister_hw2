@@ -124,7 +124,9 @@ class App extends React.Component {
             // ANY AFTER EFFECTS?
         });
     }
-    deleteList = () => {
+    deleteList = (key) => {
+        this.listKeyPair = this.db.queryGetList(key);
+
         // SOMEHOW YOU ARE GOING TO HAVE TO FIGURE OUT
         // WHICH LIST IT IS THAT THE USER WANTS TO
         // DELETE AND MAKE THAT CONNECTION SO THAT THE
@@ -142,6 +144,30 @@ class App extends React.Component {
         let modal = document.getElementById("delete-modal");
         modal.classList.remove("is-visible");
     }
+
+    confirmDeleteListModal(){
+        let modal = document.getElementById("delete-modal");
+        modal.classList.remove("is-visible");
+        //this.state.sessionData.keyNamePairs.splice(this.state.sessionData.keyNamePairs.indexOf.this.keyNamePair);
+    }
+
+    renameItm(key, newVal){
+        this.state.currentList.items[key] = newVal;
+
+        this.setState(prevState => ({
+            sessionData: {
+                nextKey: prevState.sessionData.nextKey,
+                counter: prevState.sessionData.counter,
+                keyNamePairs: prevState.sessionData.keyNamePairs,
+                currentList: prevState.currentList
+            }
+        }), )
+        let list = this.state.currentList;
+            this.db.mutationUpdateList(list);
+            this.db.mutationUpdateSessionData(this.state.sessionData);
+
+    }
+
     render() {
         return (
             <div id="app-root">
@@ -158,11 +184,16 @@ class App extends React.Component {
                     renameListCallback={this.renameList}
                 />
                 <Workspace
-                    currentList={this.state.currentList} />
+                    currentList={this.state.currentList} 
+                    renameItm = {this.renameItm}
+                    loadListCallback={this.loadList}
+                    />
                 <Statusbar 
                     currentList={this.state.currentList} />
                 <DeleteModal
+                    listKeyPair = {this.listKeyPair}
                     hideDeleteListModalCallback={this.hideDeleteListModal}
+                    confirmDeleteListModalCallback={this.confirmDeleteListModal}
                 />
             </div>
         );

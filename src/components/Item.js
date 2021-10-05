@@ -1,11 +1,11 @@
 import React from "react";
 
-export default class ListCard extends React.Component {
+export default class Item extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            text: this.props.keyNamePair.name,
+            text: this.props.itm,
             editActive: false,
         }
     }
@@ -25,9 +25,8 @@ export default class ListCard extends React.Component {
         this.props.loadListCallback(listKey);
     }
     handleDeleteList = (event) => {
-        let listKey = event.target.id;
         event.stopPropagation();
-        this.props.deleteListCallback(listKey);
+        this.props.deleteListCallback(this.props.keyNamePair);
     }
     handleToggleEdit = (event) => {
         this.setState({
@@ -45,50 +44,36 @@ export default class ListCard extends React.Component {
     handleBlur = () => {
         let key = this.props.keyNamePair.key;
         let textValue = this.state.text;
-        console.log("ListCard handleBlur: " + textValue);
+        console.log("Item handleBlur: " + textValue);
         this.props.renameListCallback(key, textValue);
         this.handleToggleEdit();
     }
 
     render() {
-        const { keyNamePair, selected } = this.props;
+        const { itm, renameItm, itmkey } = this.props;
 
         if (this.state.editActive) {
             return (
                 <input
-                    id={"list-" + keyNamePair.name}
-                    className='list-card'
+                    id={"top-5-item-" + (itmkey-1)}
+                    className='top-5-item-'
                     type='text'
                     onKeyPress={this.handleKeyPress}
                     onBlur={this.handleBlur}
                     onChange={this.handleUpdate}
-                    defaultValue={keyNamePair.name}
+                    defaultValue={itm}
                 />)
         }
         else {
-
-            let selectClass = "unselected-list-card";
-            if (selected) {
-                selectClass = "selected-list-card";
-            }
             return (
                 <div
-                    id={keyNamePair.key}
-                    key={keyNamePair.key}
+                    id={'top5-item-' + (itmkey-1)}
                     onClick={this.handleClick}
-                    className={'list-card ' + selectClass}>
-                    <span
-                        id={"list-card-text-" + keyNamePair.key}
-                        key={keyNamePair.key}
-                        className="list-card-text">
-                        {keyNamePair.name}
+                    className={'top5-item' }>
+                    <span>
+                        {itm}
                     </span>
-                    <input
-                        type="button"
-                        id={"delete-list-" + keyNamePair.key}
-                        className="list-card-button"
-                        onClick={this.handleDeleteList}
-                        value={"\u2715"} />
+                    
                 </div>
             );
         }
