@@ -9,10 +9,11 @@ export default class Item extends React.Component {
             editActive: false,
         }
     }
-    handleClick = () => {
-        this.setState({
-            editActive: !this.state.editActive
-        });
+    handleClick = (event) => {
+        if (event.detail === 2){ 
+            this.setState({
+                editActive: !this.state.editActive
+            });}
     }
     handleToggleEdit = () => {
         this.setState({
@@ -28,8 +29,8 @@ export default class Item extends React.Component {
         }
     }
     handleBlur = () => {
+        this.props.renameItm(this.props.itmKey, this.state.text, this.props.currentList.key);
 
-        this.props.renameItm(this.props.itmkey, this.state.text);
         this.setState({
             editActive: !this.state.editActive
         });
@@ -39,9 +40,9 @@ export default class Item extends React.Component {
         const { itm, itmkey } = this.props;
         if (this.state.editActive) {
             return (
-                <div id={'top5-item-' + (itmkey-1)} className={'top5-item' }>
+                <div id={'top5-item-' + (itmkey)} className={'top5-item' }>
                     <input
-                        id={"top-5-item-" + (itmkey-1)}
+                        id={"top-5-item-" + (itmkey)}
                         className='top-5-item-'
                         type='text'
                         onKeyPress={this.handleKeyPress}
@@ -54,7 +55,7 @@ export default class Item extends React.Component {
         else {
             return (
                 <div
-                    id={'top5-item-' + (itmkey-1)}
+                    id={'top5-item-' + (itmkey)}
                     onClick={this.handleClick}
                     className={'top5-item' }>
                     <span>

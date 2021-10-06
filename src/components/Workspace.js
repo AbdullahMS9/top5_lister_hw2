@@ -16,29 +16,34 @@ export default class Workspace extends React.Component {
                 </div>
                 <div id="edit-items">
                     <Item
-                        itmKey={1}
+                        itmKey={0}
                         itm={currentList.items.at(0)}
                         renameItm = {renameItm}
+                        currentList={currentList}
+                    />
+                    <Item
+                        itmKey={1}
+                        itm={currentList.items.at(1)}
+                        renameItm = {renameItm}
+                        currentList={currentList}
                     />
                     <Item
                         itmKey={2}
-                        itm={currentList.items.at(1)}
+                        itm={currentList.items.at(2)}
                         renameItm = {renameItm}
+                        currentList={currentList}
                     />
                     <Item
                         itmKey={3}
-                        itm={currentList.items.at(2)}
+                        itm={currentList.items.at(3)}
                         renameItm = {renameItm}
+                        currentList={currentList}
                     />
                     <Item
                         itmKey={4}
-                        itm={currentList.items.at(3)}
-                        renameItm = {renameItm}
-                    />
-                    <Item
-                        itmKey={5}
                         itm={currentList.items.at(4)}
                         renameItm = {renameItm}
+                        currentList={currentList}
                     />
                 </div>
             </div>

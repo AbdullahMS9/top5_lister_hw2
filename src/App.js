@@ -173,25 +173,28 @@ class App extends React.Component {
                 keyNamePairs: newKyNmePrs                
             }
         }), () => {
-        this.db.queryDeleteList(this.state.listKeyPairMarkedForDeletion.key);
+        this.db.mutationDeleteList(this.state.listKeyPairMarkedForDeletion.key);
         this.db.mutationUpdateSessionData(this.state.sessionData);
         });
     }
 
-    renameItm = (key, newVal) => {
+    renameItm = (key, newVal, lstKey) => {
         this.state.currentList.items[key] = newVal;
-
         this.setState(prevState => ({
+            currentList: prevState.currentList,
             sessionData: {
                 nextKey: prevState.sessionData.nextKey,
                 counter: prevState.sessionData.counter,
-                keyNamePairs: prevState.sessionData.keyNamePairs,
+                keyNamePairs: [...this.state.sessionData.keyNamePairs],
                 currentList: prevState.currentList
             }
-        }), )
-    
-        this.db.mutationUpdateList(this.state.currentList);
+        } ))
+        this.db.queryGetList(lstKey).items[key] = newVal;
+        this.db.mutationUpdateList(this.db.queryGetList(lstKey));
         this.db.mutationUpdateSessionData(this.state.sessionData);
+    }
+
+    dragItm = () => {
 
     }
 
@@ -213,6 +216,7 @@ class App extends React.Component {
                 <Workspace
                     currentList={this.state.currentList} 
                     renameItm = {this.renameItm}
+                    dragItm = {this.dragItm}
                     />
                 <Statusbar 
                     currentList={this.state.currentList} />
