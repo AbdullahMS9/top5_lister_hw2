@@ -191,14 +191,32 @@ class App extends React.Component {
                 currentList: prevState.currentList
             }
         } ))
+        let lst = this.db.queryGetList(lstKey);
+        lst.items[key] = newVal;
+        this.db.mutationUpdateList(lst);
+        this.db.mutationUpdateSessionData(this.state.sessionData);
+    
+        
+    
+
+    }
+
+    dragItm = (oKey, nKey) => {
+        this.state.currentList.items.splice(nKey, 0, this.state.currentList.items.splice(oKey, 1)[0]);
+        this.setState(prevState => ({
+            sessionData: {
+                nextKey: prevState.sessionData.nextKey,
+                counter: prevState.sessionData.counter,
+                keyNamePairs: prevState.sessionData.keyNamePairs,
+                currentList: prevState.currentList 
+            }
+        }), )
         let list = this.state.currentList;
         this.db.mutationUpdateList(list);
         this.db.mutationUpdateSessionData(this.state.sessionData);
     }
 
-    dragItm = () => {
 
-    }
 
     render() {
         return (

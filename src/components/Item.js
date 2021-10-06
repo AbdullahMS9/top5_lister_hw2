@@ -30,10 +30,34 @@ export default class Item extends React.Component {
     }
     handleBlur = () => {
         this.props.renameItm(this.props.itmKey, this.state.text, this.props.currentList.key);
-
         this.setState({
             editActive: !this.state.editActive
         });
+    }
+    handleDragStart = (event) =>{
+        event.preventDefault();
+        this.state.text = this.props.itm
+        event.dataTransfer.setData("key", this.props.itmKey)
+        
+    }
+    handleDragOver = (event) => {
+        event.preventDefault();
+        event.target.classList.add("top5-item-dragged-to");
+    }
+    handleDragLeave = (event) => {
+        event.preventDefault();
+        event.target.classList.remove("top5-item-dragged-to");
+    }
+    handleDragDrop =(event) =>{
+        event.preventDefault();
+        let oKey = event.dataTransfer.getData("key");
+        let nKey = event.target.id.substring(10);
+        this.props.swapItemCallback(oKey, nKey);
+        event.target.classList.remove("top5-item-dragged-to");
+    }
+    handleDragEnter = (event) => {
+        if (event.target.className !== "top5-item") {
+        } else{event.target.style.border = "2px solid green"; }
     }
 
     render() {
@@ -54,10 +78,16 @@ export default class Item extends React.Component {
         }
         else {
             return (
-                <div
+                <div draggable = "true"
                     id={'top5-item-' + (itmkey)}
+                    className={'top5-item'}
                     onClick={this.handleClick}
-                    className={'top5-item' }>
+                    onDragStart = {this.handleDragStart}
+                    onDragOver = {this.handleDragOver}
+                    onDragLeave = {this.handleDragLeave}
+                    onDrop = {this.handleDragDrop}
+                    onDragEnter={this.handleDragEnter}
+                    >
                     <span>
                         {itm}
                     </span>

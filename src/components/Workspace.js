@@ -3,7 +3,7 @@ import Item from "./Item";
 
 export default class Workspace extends React.Component {
     render() {
-        const {currentList,renameItm} = this.props;
+        const {currentList,renameItm,dragItm} = this.props;
         if (currentList !== null){
             return(<div id="top5-workspace">
             <div id="workspace-edit">
@@ -20,30 +20,44 @@ export default class Workspace extends React.Component {
                         itm={currentList.items.at(0)}
                         renameItm = {renameItm}
                         currentList={currentList}
+                        dragItm = {dragItm}
+                        draggable = "true"
                     />
                     <Item
                         itmKey={1}
                         itm={currentList.items.at(1)}
                         renameItm = {renameItm}
                         currentList={currentList}
+                        dragItm = {dragItm}
+                        draggable = "true"
+
                     />
                     <Item
                         itmKey={2}
                         itm={currentList.items.at(2)}
                         renameItm = {renameItm}
                         currentList={currentList}
+                        dragItm = {dragItm}
+                        draggable = "true"
+
                     />
                     <Item
                         itmKey={3}
                         itm={currentList.items.at(3)}
                         renameItm = {renameItm}
                         currentList={currentList}
+                        dragItm = {dragItm}
+                        draggable = "true"
+
                     />
                     <Item
                         itmKey={4}
                         itm={currentList.items.at(4)}
                         renameItm = {renameItm}
                         currentList={currentList}
+                        dragItm = {dragItm}
+                        draggable = "true"
+
                     />
                 </div>
             </div>
