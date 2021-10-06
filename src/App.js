@@ -179,7 +179,9 @@ class App extends React.Component {
     }
 
     renameItm = (key, newVal, lstKey) => {
+        
         this.state.currentList.items[key] = newVal;
+
         this.setState(prevState => ({
             currentList: prevState.currentList,
             sessionData: {
@@ -189,8 +191,8 @@ class App extends React.Component {
                 currentList: prevState.currentList
             }
         } ))
-        this.db.queryGetList(lstKey).items[key] = newVal;
-        this.db.mutationUpdateList(this.db.queryGetList(lstKey));
+        let list = this.state.currentList;
+        this.db.mutationUpdateList(list);
         this.db.mutationUpdateSessionData(this.state.sessionData);
     }
 
