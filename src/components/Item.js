@@ -35,7 +35,7 @@ export default class Item extends React.Component {
         });
     }
     handleDragStart = (event) =>{
-        event.preventDefault();
+        //event.preventDefault();
         this.state.text = this.props.itm
         event.dataTransfer.setData("key", this.props.itmKey)
         
@@ -52,12 +52,8 @@ export default class Item extends React.Component {
         event.preventDefault();
         let oKey = event.dataTransfer.getData("key");
         let nKey = event.target.id.substring(10);
-        this.props.swapItemCallback(oKey, nKey);
+        this.props.dragItm(oKey, nKey);
         event.target.classList.remove("top5-item-dragged-to");
-    }
-    handleDragEnter = (event) => {
-        if (event.target.className !== "top5-item") {
-        } else{event.target.style.border = "2px solid green"; }
     }
 
     render() {
@@ -78,15 +74,15 @@ export default class Item extends React.Component {
         }
         else {
             return (
-                <div draggable = "true"
+                <div 
                     id={'top5-item-' + (itmkey)}
                     className={'top5-item'}
                     onClick={this.handleClick}
+                    draggable = "true"
                     onDragStart = {this.handleDragStart}
                     onDragOver = {this.handleDragOver}
                     onDragLeave = {this.handleDragLeave}
                     onDrop = {this.handleDragDrop}
-                    onDragEnter={this.handleDragEnter}
                     >
                     <span>
                         {itm}
